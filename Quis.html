@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Interaktif - Petualangan di Kampung Nusantara</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4CAF50;
+            --secondary: #FF9800;
+            --accent: #2196F3;
+            --light: #f9f9f9;
+            --dark: #333;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --correct: #4CAF50;
+            --incorrect: #F44336;
+            --warning: #FFC107;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .quiz-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(76, 175, 80, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 152, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(33, 150, 243, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><circle cx="50" cy="50" r="40" fill="white" opacity="0.1"/></svg>');
+            background-size: 80px 80px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            width: 70px;
+            height: 70px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: bounce 2s infinite alternate;
+        }
+        
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background-color: var(--secondary);
+            padding: 0.8rem;
+            box-shadow: var(--shadow);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav li {
+            margin: 0 10px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: var(--primary);
+            font-size: 2.2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .quiz-intro {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .quiz-intro h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .character-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .character {
+            text-align: center;
+            max-width: 150px;
+        }
+        
+        .character-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: var(--light);
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary);
+            border: 3px solid var(--secondary);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .quiz-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            display: none;
+        }
+        
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--light);
+        }
+        
+        .quiz-progress {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .progress-bar {
+            width: 150px;
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 0.5s;
+        }
+        
+        .timer {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: #fff3e0;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: var(--secondary);
+        }
+        
+        .question-container {
+            margin-bottom: 2rem;
+        }
+        
+        .question-number {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .question-text {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+            line-height: 1.5;
+        }
+        
+        .question-image {
+            max-width: 100%;
+            height: 200px;
+            background: var(--light);
+            border-radius: 10px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--accent);
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 2rem;
+        }
+        
+        .option {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .option:hover {
+            border-color: var(--accent);
+            background: #f0f8ff;
+            transform: translateY(-2px);
+        }
+        
+        .option.selected {
+            border-color: var(--accent);
+            background: #e3f2fd;
+        }
+        
+        .option.correct {
+            border-color: var(--correct);
+            background: #e8f5e9;
+        }
+        
+        .option.incorrect {
+            border-color: var(--incorrect);
+            background: #ffebee;
+        }
+        
+        .option-letter {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--dark);
+            flex-shrink: 0;
+        }
+        
+        .option.selected .option-letter {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .option.correct .option-letter {
+            background: var(--correct);
+            color: white;
+        }
+        
+        .option.incorrect .option-letter {
+            background: var(--incorrect);
+            color: white;
+        }
+        
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .quiz-button {
+            background-color: var(--secondary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #e68900;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .quiz-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #e68900;
+        }
+        
+        .quiz-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #e68900;
+        }
+        
+        .quiz-button:disabled {
+            background-color: #cccccc;
+            box-shadow: 0 4px 0 #999999;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .quiz-button:disabled:hover {
+            transform: none;
+            box-shadow: 0 4px 0 #999999;
+        }
+        
+        .hint-container {
+            background: #fff9c4;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 1rem 0;
+            display: none;
+        }
+        
+        .hint-title {
+            color: var(--warning);
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .result-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            display: none;
+        }
+        
+        .result-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+        
+        .score-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .score-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            min-width: 150px;
+            text-align: center;
+        }
+        
+        .score-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .score-label {
+            color: var(--dark);
+            font-size: 1rem;
+        }
+        
+        .result-message {
+            margin: 1.5rem 0;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+        
+        .badge-container {
+            margin: 2rem 0;
+        }
+        
+        .badge {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .certificate-button {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 0 #1b5e20;
+            margin-top: 1rem;
+        }
+        
+        .certificate-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 0 #1b5e20;
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            .quiz-header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            
+            .quiz-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .quiz-button {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 5px 0;
+            }
+            
+            .score-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-background"></div>
+    
+    <header>
+        <div class="logo-container">
+            <div class="logo">🧠</div>
+            <div>
+                <h1>Kuis Interaktif</h1>
+                <p class="subtitle">Uji Pemahamanmu tentang Kampung Nusantara</p>
+            </div>
+        </div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#pengantar" class="active">Pengantar</a></li>
+            <li><a href="#kuis">Mulai Kuis</a></li>
+            <li><a href="#hasil">Hasil</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <section id="pengantar" class="quiz-intro">
+            <h2>Selamat Datang di Kuis Interaktif!</h2>
+            <p>Uji pengetahuanmu tentang materi yang telah kamu pelajari di Petualangan Kampung Nusantara. Kuis ini akan menguji pemahamanmu tentang pekerjaan, rumah adat, dan budaya Indonesia.</p>
+            
+            <div class="character-container">
+                <div class="character">
+                    <div class="character-img">👧</div>
+                    <h3>Asti</h3>
+                    <p>Pemandu Kuis</p>
+                </div>
+                <div class="character">
+                    <div class="character-img">👦</div>
+                    <h3>Budi</h3>
+                    <p>Penantang Kuis</p>
+                </div>
+            </div>
+            
+            <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0;">
+                <h3 style="color: var(--primary); margin-bottom: 1rem;">Petunjuk Kuis:</h3>
+                <ul style="text-align: left; padding-left: 1.5rem;">
+                    <li>Kuis terdiri dari 10 pertanyaan pilihan ganda</li>
+                    <li>Kamu memiliki waktu 15 menit untuk menyelesaikan kuis</li>
+                    <li>Pilih jawaban yang paling tepat</li>
+                    <li>Gunakan tombol "Petunjuk" jika kesulitan menjawab</li>
+                    <li>Nilai akan dihitung berdasarkan jawaban benar</li>
+                </ul>
+            </div>
+            
+            <button class="quiz-button" onclick="startQuiz()">
+                <i class="fas fa-play-circle"></i> Mulai Kuis
+            </button>
+        </section>
+        
+        <section id="kuis" class="quiz-container">
+            <div class="quiz-header">
+                <div class="quiz-progress">
+                    <span>Pertanyaan: <span id="current-question">1</span>/<span id="total-questions">10</span></span>
+                    <div class="progress-bar">
+                        <div class="progress" id="quiz-progress"></div>
+                    </div>
+                </div>
+                <div class="timer">
+                    <i class="fas fa-clock"></i>
+                    <span id="timer">15:00</span>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <div class="question-number" id="question-category">Pekerjaan</div>
+                <div class="question-text" id="question-text">Apa alat yang digunakan oleh petani untuk mengolah tanah?</div>
+                <div class="question-image" id="question-image">👨‍🌾</div>
+            </div>
+            
+            <div class="hint-container" id="hint-container">
+                <div class="hint-title">
+                    <i class="fas fa-lightbulb"></i> Petunjuk
+                </div>
+                <div id="hint-text">Alat ini digunakan untuk menggali dan mengolah tanah sebelum menanam.</div>
+            </div>
+            
+            <div class="options-container" id="options-container">
+                <!-- Opsi akan diisi oleh JavaScript -->
+            </div>
+            
+            <div class="quiz-controls">
+                <button class="quiz-button" id="hint-button" onclick="toggleHint()">
+                    <i class="fas fa-lightbulb"></i> Petunjuk
+                </button>
+                <button class="quiz-button" id="next-button" onclick="nextQuestion()" disabled>
+                    <i class="fas fa-arrow-right"></i> Lanjut
+                </button>
+            </div>
+        </section>
+        
+        <section id="hasil" class="result-container">
+            <h2 class="result-title">Selamat! Kamu Telah Menyelesaikan Kuis</h2>
+            
+            <div class="score-container">
+                <div class="score-card">
+                    <div class="score-value" id="score-value">0</div>
+                    <div class="score-label">Nilai</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-value" id="correct-answers">0</div>
+                    <div class="score-label">Jawaban Benar</div>
+                </div>
+                <div class="score-card">
+                    <div class="score-value" id="time-taken">0:00</div>
+                    <div class="score-label">Waktu</div>
+                </div>
+            </div>
+            
+            <div class="badge-container">
+                <div class="badge" id="result-badge">🥇</div>
+            </div>
+            
+            <div class="result-message" id="result-message">
+                Kamu telah menunjukkan pemahaman yang baik tentang materi pembelajaran. Pertahankan semangat belajarmu!
+            </div>
+            
+            <div>
+                <button class="quiz-button" onclick="restartQuiz()">
+                    <i class="fas fa-redo"></i> Ulangi Kuis
+                </button>
+                <a href="#" class="certificate-button" id="certificate-button">
+                    <i class="fas fa-award"></i> Dapatkan Sertifikat
+                </a>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p>&copy; 2023 Kuis Interaktif - Petualangan di Kampung Nusantara</p>
+        <p>Media Pembelajaran Digital IPS untuk Kelas Rendah SD</p>
+    </footer>
+
+    <script>
+        // Data kuis
+        const quizData = [
+            {
+                category: "Pekerjaan",
+                question: "Apa alat yang digunakan oleh petani untuk mengolah tanah?",
+                image: "👨‍🌾",
+                options: [
+                    { text: "Stetoskop", correct: false },
+                    { text: "Cangkul", correct: true },
+                    { text: "Palu", correct: false },
+                    { text: "Wajan", correct: false }
+                ],
+                hint: "Alat ini digunakan untuk menggali dan mengolah tanah sebelum menanam."
+            },
+            {
+                category: "Pekerjaan",
+                question: "Dokter menggunakan alat ini untuk memeriksa detak jantung pasien.",
+                image: "👨‍⚕️",
+                options: [
+                    { text: "Termometer", correct: false },
+                    { text: "Stetoskop", correct: true },
+                    { text: "Suntikan", correct: false },
+                    { text: "Pinset", correct: false }
+                ],
+                hint: "Alat ini ditempelkan ke dada untuk mendengar suara dari dalam tubuh."
+            },
+            {
+                category: "Rumah Adat",
+                question: "Apa nama rumah adat Jawa yang memiliki atap tinggi berbentuk limas?",
+                image: "🏠",
+                options: [
+                    { text: "Rumah Gadang", correct: false },
+                    { text: "Rumah Joglo", correct: true },
+                    { text: "Rumah Honai", correct: false },
+                    { text: "Rumah Tongkonan", correct: false }
+                ],
+                hint: "Rumah ini memiliki pendopo untuk menerima tamu dan sering ditemui di Jawa Tengah."
+            },
+            {
+                category: "Rumah Adat",
+                question: "Bagian rumah Joglo yang digunakan untuk menerima tamu disebut...",
+                image: "🏛️",
+                options: [
+                    { text: "Dalem", correct: false },
+                    { text: "Pawon", correct: false },
+                    { text: "Pendopo", correct: true },
+                    { text: "Senthong", correct: false }
+                ],
+                hint: "Ruangan ini berada di bagian depan rumah dan biasanya tanpa dinding."
+            },
+            {
+                category: "Budaya",
+                question: "Apa nama pakaian adat tradisional dari Jawa?",
+                image: "👘",
+                options: [
+                    { text: "Kebaya", correct: true },
+                    { text: "Baju Bodo", correct: false },
+                    { text: "Ulee Balang", correct: false },
+                    { text: "Baju Kurung", correct: false }
+                ],
+                hint: "Pakaian ini sering dikenakan dengan kain batik dan selendang."
+            },
+            {
+                category: "Pekerjaan",
+                question: "Siapa yang bertugas menjaga keamanan dan ketertiban di masyarakat?",
+                image: "👮‍♂️",
+                options: [
+                    { text: "Guru", correct: false },
+                    { text: "Dokter", correct: false },
+                    { text: "Polisi", correct: true },
+                    { text: "Koki", correct: false }
+                ],
+                hint: "Profesi ini menggunakan seragam biru dan bertugas menegakkan hukum."
+            },
+            {
+                category: "Rumah Adat",
+                question: "Bagian rumah Joglo yang digunakan sebagai dapur disebut...",
+                image: "🍳",
+                options: [
+                    { text: "Pringgitan", correct: false },
+                    { text: "Pawon", correct: true },
+                    { text: "Gandhok", correct: false },
+                    { text: "Dalem", correct: false }
+                ],
+                hint: "Ruangan ini biasanya terletak terpisah dari bangunan utama."
+            },
+            {
+                category: "Budaya",
+                question: "Apa nama alat musik tradisional Jawa yang dimainkan dengan dipetik?",
+                image: "🎵",
+                options: [
+                    { text: "Gamelan", correct: false },
+                    { text: "Angklung", correct: false },
+                    { text: "Sasando", correct: false },
+                    { text: "Siter", correct: true }
+                ],
+                hint: "Alat musik ini memiliki senar dan bentuknya menyerupai kecapi kecil."
+            },
+            {
+                category: "Pekerjaan",
+                question: "Apa nama pekerja yang membuat meja, kursi, dan lemari dari kayu?",
+                image: "👨‍🔧",
+                options: [
+                    { text: "Tukang Batu", correct: false },
+                    { text: "Tukang Kayu", correct: true },
+                    { text: "Tukang Las", correct: false },
+                    { text: "Tukang Jahit", correct: false }
+                ],
+                hint: "Pekerja ini menggunakan gergaji, palu, dan paku dalam pekerjaannya."
+            },
+            {
+                category: "Budaya",
+                question: "Apa nama tarian tradisional dari Jawa yang gerakannya lemah gemulai?",
+                image: "💃",
+                options: [
+                    { text: "Tari Piring", correct: false },
+                    { text: "Tari Kecak", correct: false },
+                    { text: "Tari Saman", correct: false },
+                    { text: "Tari Serimpi", correct: true }
+                ],
+                hint: "Tarian ini biasanya dibawakan oleh penari perempuan dengan gerakan yang halus."
+            }
+        ];
+
+        // Variabel kuis
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timeLeft = 900; // 15 menit dalam detik
+        let timerInterval;
+        let userAnswers = [];
+        let quizStarted = false;
+
+        // Elemen DOM
+        const quizIntro = document.querySelector('.quiz-intro');
+        const quizContainer = document.querySelector('.quiz-container');
+        const resultContainer = document.querySelector('.result-container');
+        const currentQuestionElement = document.getElementById('current-question');
+        const totalQuestionsElement = document.getElementById('total-questions');
+        const quizProgressElement = document.getElementById('quiz-progress');
+        const timerElement = document.getElementById('timer');
+        const questionCategoryElement = document.getElementById('question-category');
+        const questionTextElement = document.getElementById('question-text');
+        const questionImageElement = document.getElementById('question-image');
+        const optionsContainerElement = document.getElementById('options-container');
+        const hintContainerElement = document.getElementById('hint-container');
+        const hintTextElement = document.getElementById('hint-text');
+        const hintButtonElement = document.getElementById('hint-button');
+        const nextButtonElement = document.getElementById('next-button');
+        const scoreValueElement = document.getElementById('score-value');
+        const correctAnswersElement = document.getElementById('correct-answers');
+        const timeTakenElement = document.getElementById('time-taken');
+        const resultBadgeElement = document.getElementById('result-badge');
+        const resultMessageElement = document.getElementById('result-message');
+        const certificateButtonElement = document.getElementById('certificate-button');
+
+        // Fungsi untuk memulai kuis
+        function startQuiz() {
+            quizIntro.style.display = 'none';
+            quizContainer.style.display = 'block';
+            quizStarted = true;
+            
+            // Set total pertanyaan
+            totalQuestionsElement.textContent = quizData.length;
+            
+            // Mulai timer
+            startTimer();
+            
+            // Tampilkan pertanyaan pertama
+            showQuestion();
+        }
+
+        // Fungsi untuk menampilkan pertanyaan
+        function showQuestion() {
+            const currentQuestion = quizData[currentQuestionIndex];
+            
+            // Update progress
+            currentQuestionElement.textContent = currentQuestionIndex + 1;
+            quizProgressElement.style.width = `${((currentQuestionIndex + 1) / quizData.length) * 100}%`;
+            
+            // Tampilkan pertanyaan
+            questionCategoryElement.textContent = currentQuestion.category;
+            questionTextElement.textContent = currentQuestion.question;
+            questionImageElement.textContent = currentQuestion.image;
+            
+            // Sembunyikan petunjuk
+            hintContainerElement.style.display = 'none';
+            
+            // Reset tombol
+            nextButtonElement.disabled = true;
+            hintButtonElement.disabled = false;
+            
+            // Tampilkan opsi
+            optionsContainerElement.innerHTML = '';
+            currentQuestion.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.classList.add('option');
+                optionElement.innerHTML = `
+                    <div class="option-letter">${String.fromCharCode(65 + index)}</div>
+                    <div class="option-text">${option.text}</div>
+                `;
+                optionElement.addEventListener('click', () => selectOption(optionElement, option.correct));
+                optionsContainerElement.appendChild(optionElement);
+            });
+            
+            // Set petunjuk
+            hintTextElement.textContent = currentQuestion.hint;
+        }
+
+        // Fungsi untuk memilih opsi
+        function selectOption(optionElement, isCorrect) {
+            // Nonaktifkan semua opsi
+            document.querySelectorAll('.option').forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            // Tandai opsi yang dipilih
+            optionElement.classList.add('selected');
+            
+            // Tandai jawaban benar/salah
+            if (isCorrect) {
+                optionElement.classList.add('correct');
+                score++;
+            } else {
+                optionElement.classList.add('incorrect');
+                // Tandai jawaban yang benar
+                document.querySelectorAll('.option').forEach(opt => {
+                    if (opt.querySelector('.option-text').textContent === 
+                        quizData[currentQuestionIndex].options.find(opt => opt.correct).text) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+            
+            // Simpan jawaban pengguna
+            userAnswers.push({
+                question: quizData[currentQuestionIndex].question,
+                userAnswer: optionElement.querySelector('.option-text').textContent,
+                correctAnswer: quizData[currentQuestionIndex].options.find(opt => opt.correct).text,
+                isCorrect: isCorrect
+            });
+            
+            // Aktifkan tombol lanjut
+            nextButtonElement.disabled = false;
+            hintButtonElement.disabled = true;
+        }
+
+        // Fungsi untuk menampilkan/sembunyikan petunjuk
+        function toggleHint() {
+            if (hintContainerElement.style.display === 'none') {
+                hintContainerElement.style.display = 'block';
+            } else {
+                hintContainerElement.style.display = 'none';
+            }
+        }
+
+        // Fungsi untuk pertanyaan berikutnya
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < quizData.length) {
+                showQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        // Fungsi untuk memulai timer
+        function startTimer() {
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    finishQuiz();
+                }
+            }, 1000);
+        }
+
+        // Fungsi untuk memperbarui tampilan timer
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+            
+            // Ubah warna timer jika waktu hampir habis
+            if (timeLeft <= 60) {
+                timerElement.style.color = 'var(--incorrect)';
+            }
+        }
+
+        // Fungsi untuk menyelesaikan kuis
+        function finishQuiz() {
+            clearInterval(timerInterval);
+            
+            // Hitung waktu yang digunakan
+            const timeUsed = 900 - timeLeft;
+            const minutesUsed = Math.floor(timeUsed / 60);
+            const secondsUsed = timeUsed % 60;
+            
+            // Sembunyikan container kuis, tampilkan hasil
+            quizContainer.style.display = 'none';
+            resultContainer.style.display = 'block';
+            
+            // Tampilkan hasil
+            scoreValueElement.textContent = `${score * 10}`;
+            correctAnswersElement.textContent = `${score}/${quizData.length}`;
+            timeTakenElement.textContent = `${minutesUsed}:${secondsUsed < 10 ? '0' : ''}${secondsUsed}`;
+            
+            // Tentukan badge dan pesan berdasarkan skor
+            let badge = "🥉";
+            let message = "";
+            
+            if (score >= 9) {
+                badge = "🥇";
+                message = "Luar biasa! Kamu benar-benar menguasai materi pembelajaran. Pertahankan prestasimu!";
+            } else if (score >= 7) {
+                badge = "🥈";
+                message = "Bagus sekali! Pemahamanmu tentang materi sudah cukup baik. Tingkatkan lagi ya!";
+            } else if (score >= 5) {
+                badge = "🥉";
+                message = "Cukup baik! Kamu sudah memahami sebagian besar materi. Belajar lagi ya!";
+            } else {
+                badge = "📚";
+                message = "Jangan menyerah! Pelajari lagi materinya dan coba kuis sekali lagi. Kamu pasti bisa!";
+            }
+            
+            resultBadgeElement.textContent = badge;
+            resultMessageElement.textContent = message;
+            
+            // Set link sertifikat
+            certificateButtonElement.href = `data:text/plain;charset=utf-8,${encodeURIComponent(
+                `SERTIFIKAT PENYELESAIAN KUIS\n\nNama: [Nama Siswa]\nNilai: ${score * 10}\nTanggal: ${new Date().toLocaleDateString('id-ID')}\n\nSelamat! Kamu telah menyelesaikan kuis Petualangan di Kampung Nusantara dengan baik.`
+            )}`;
+            certificateButtonElement.download = "sertifikat-kuis.txt";
+        }
+
+        // Fungsi untuk mengulang kuis
+        function restartQuiz() {
+            // Reset variabel
+            currentQuestionIndex = 0;
+            score = 0;
+            timeLeft = 900;
+            userAnswers = [];
+            
+            // Reset tampilan
+            resultContainer.style.display = 'none';
+            quizIntro.style.display = 'block';
+            timerElement.style.color = 'var(--secondary)';
+            
+            // Hentikan timer jika masih berjalan
+            if (timerInterval) {
+                clearInterval(timerInterval);
+            }
+        }
+
+        // Inisialisasi
+        totalQuestionsElement.textContent = quizData.length;
+    </script>
+</body>
+</html>

@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rumah Adat Bali - Petualangan di Kampung Nusantara</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF6B35;
+            --secondary: #FFA726;
+            --accent: #4ECDC4;
+            --light: #FFF8E1;
+            --dark: #5D4037;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+            --stone: #78909C;
+            --gold: #FFD700;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #FFECB3, #FFCCBC);
+            color: var(--dark);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .balinese-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(78, 205, 196, 0.1) 0%, transparent 50%);
+            background-size: 100px 100px;
+            z-index: -1;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 5px solid var(--accent);
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100"><path d="M50,10 L60,40 L90,40 L65,60 L75,90 L50,70 L25,90 L35,60 L10,40 L40,40 Z" fill="white" opacity="0.1"/></svg>');
+            background-size: 60px 60px;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            width: 70px;
+            height: 70px;
+            background-color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: bounce 2s infinite alternate;
+        }
+        
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background-color: var(--secondary);
+            padding: 0.8rem;
+            box-shadow: var(--shadow);
+        }
+        
+        nav ul {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            flex-wrap: wrap;
+        }
+        
+        nav li {
+            margin: 0 10px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin: 1.5rem 0;
+            color: white;
+            font-size: 2.2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .intro-section {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 3px solid var(--primary);
+            position: relative;
+        }
+        
+        .intro-section::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid var(--accent);
+            border-radius: 20px;
+            z-index: -1;
+        }
+        
+        .intro-section h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .character-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .character {
+            text-align: center;
+            max-width: 150px;
+        }
+        
+        .character-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background-color: var(--light);
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--primary);
+            border: 3px solid var(--secondary);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .house-display {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 3px solid var(--primary);
+        }
+        
+        .house-title {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .house-model {
+            background: linear-gradient(180deg, #87CEEB 60%, #66BB6A 40%);
+            height: 300px;
+            border-radius: 10px;
+            position: relative;
+            margin: 2rem auto;
+            max-width: 500px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .bali-gate {
+            position: absolute;
+            bottom: 40%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 50%;
+            background: var(--stone);
+            z-index: 2;
+        }
+        
+        .bali-gate::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            background: var(--stone);
+            clip-path: polygon(0% 100%, 20% 0%, 40% 100%, 60% 0%, 80% 100%, 100% 0%, 100% 100%);
+        }
+        
+        .bali-gate::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: var(--primary);
+        }
+        
+        .bali-wall {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: var(--stone);
+            z-index: 1;
+        }
+        
+        .bali-compound {
+            position: absolute;
+            bottom: 10%;
+            left: 10%;
+            right: 10%;
+            display: flex;
+            justify-content: space-around;
+            z-index: 3;
+        }
+        
+        .bali-building {
+            width: 80px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 5px;
+            position: relative;
+        }
+        
+        .bali-building::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 0;
+            right: 0;
+            height: 15px;
+            background: var(--secondary);
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .house-parts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 2rem;
+        }
+        
+        .part-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .part-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        
+        .part-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .part-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .part-detail {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+            display: none;
+            border: 3px solid var(--primary);
+        }
+        
+        .part-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .part-detail-icon {
+            font-size: 4rem;
+            color: var(--primary);
+        }
+        
+        .part-info h2 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .values-section {
+            margin: 1.5rem 0;
+        }
+        
+        .values-section h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .values-list {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .value-item {
+            background: var(--light);
+            padding: 10px 15px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--accent);
+        }
+        
+        .value-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .activity-section {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+            border: 3px solid var(--primary);
+        }
+        
+        .activity-title {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .matching-game {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 2rem;
+        }
+        
+        .matching-items, .matching-targets {
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 15px;
+            min-height: 300px;
+            border: 2px dashed var(--accent);
+        }
+        
+        .matching-item {
+            background: white;
+            padding: 10px 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            cursor: move;
+            transition: all 0.3s;
+            border: 2px dashed transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .matching-item:hover {
+            background: #e3f2fd;
+            border-color: var(--accent);
+        }
+        
+        .item-icon {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .matching-target {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            min-height: 60px;
+            border: 2px dashed #ccc;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .matching-target.hover {
+            border-color: var(--accent);
+            background: #e8f5e9;
+        }
+        
+        .target-icon {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .activity-buttons {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        
+        .activity-button {
+            display: inline-block;
+            background-color: var(--secondary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            margin: 0 10px;
+            box-shadow: 0 4px 0 #EF6C00;
+        }
+        
+        .activity-button:hover {
+            background-color: #EF6C00;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 #EF6C00;
+        }
+        
+        .activity-button:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #EF6C00;
+        }
+        
+        .result-message {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .result-message.success {
+            background: #c8e6c9;
+            color: #2e7d32;
+            display: block;
+        }
+        
+        .result-message.error {
+            background: #ffcdd2;
+            color: #c62828;
+            display: block;
+        }
+        
+        .progress-section {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+            text-align: center;
+            border: 3px solid var(--primary);
+        }
+        
+        .progress-bar {
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            margin: 1rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%;
+            transition: width 0.5s;
+            border-radius: 10px;
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border-top: 5px solid var(--accent);
+        }
+        
+        .bali-border {
+            height: 20px;
+            background: repeating-linear-gradient(45deg, var(--primary), var(--primary) 10px, var(--accent) 10px, var(--accent) 20px);
+        }
+        
+        @media (max-width: 768px) {
+            .matching-game {
+                grid-template-columns: 1fr;
+            }
+            
+            .part-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 5px 0;
+            }
+            
+            .house-model {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="balinese-pattern"></div>
+    <div class="bali-border"></div>
+    
+    <header>
+        <div class="logo-container">
+            <div class="logo">🏯</div>
+            <div>
+                <h1>Rumah Adat Bali</h1>
+                <p class="subtitle">Mengenal Keunikan dan Spiritualitas Arsitektur Bali</p>
+            </div>
+        </div>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#pengantar" class="active">Pengantar</a></li>
+            <li><a href="#rumah">Kompleks Rumah</a></li>
+            <li><a href="#bagian">Bagian Rumah</a></li>
+            <li><a href="#aktivitas">Aktivitas</a></li>
+            <li><a href="#filosofi">Filosofi</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <section id="pengantar" class="intro-section">
+            <h2>Selamat Datang di Rumah Adat Bali!</h2>
+            <p>Rumah adat Bali memiliki arsitektur yang unik dan penuh makna spiritual. Setiap bagian rumah dirancang berdasarkan konsep Tri Hita Karana - harmoni antara manusia, alam, dan Tuhan.</p>
+            
+            <div class="character-container">
+                <div class="character">
+                    <div class="character-img">👧</div>
+                    <h3>Asti</h3>
+                    <p>Pemandu Petualangan</p>
+                </div>
+                <div class="character">
+                    <div class="character-img">👦</div>
+                    <h3>Budi</h3>
+                    <p>Petualang Ceria</p>
+                </div>
+            </div>
+            
+            <p>Ayo jelajahi kompleks rumah tradisional Bali dan pelajari makna di balik setiap bagiannya!</p>
+        </section>
+        
+        <section id="rumah" class="house-display">
+            <h2 class="house-title">Kompleks Rumah Tradisional Bali</h2>
+            <p>Rumah adat Bali bukanlah satu bangunan tunggal, tetapi sebuah kompleks dengan beberapa bangunan yang memiliki fungsi berbeda</p>
+            
+            <div class="house-model">
+                <div class="bali-gate"></div>
+                <div class="bali-wall"></div>
+                <div class="bali-compound">
+                    <div class="bali-building"></div>
+                    <div class="bali-building"></div>
+                    <div class="bali-building"></div>
+                </div>
+            </div>
+            
+            <div class="house-parts">
+                <div class="part-card" onclick="showPartDetail('angkul-angkul')">
+                    <div class="part-icon">🚪</div>
+                    <h3>Angkul-angkul</h3>
+                    <p>Gapura masuk yang megah</p>
+                </div>
+                
+                <div class="part-card" onclick="showPartDetail('aling-aling')">
+                    <div class="part-icon">🛡️</div>
+                    <h3>Aling-aling</h3>
+                    <p>Dinding pembatas setelah gapura</p>
+                </div>
+                
+                <div class="part-card" onclick="showPartDetail('bale-dangin')">
+                    <div class="part-icon">🏠</div>
+                    <h3>Bale Dangin</h3>
+                    <p>Balai di sebelah timur untuk upacara</p>
+                </div>
+                
+                <div class="part-card" onclick="showPartDetail('bale-dauh')">
+                    <div class="part-icon">🛏️</div>
+                    <h3>Bale Dauh</h3>
+                    <p>Balai di sebelah barat untuk tidur</p>
+                </div>
+                
+                <div class="part-card" onclick="showPartDetail('bale-sakepat')">
+                    <div class="part-icon">👨‍👩‍👧‍👦</div>
+                    <h3>Bale Sakepat</h3>
+                    <p>Balai dengan 4 tiang untuk keluarga</p>
+                </div>
+                
+                <div class="part-card" onclick="showPartDetail('sanggah')">
+                    <div class="part-icon">🛕</div>
+                    <h3>Sanggah</h3>
+                    <p>Tempat suci untuk persembahyangan</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="part-detail" class="part-detail">
+            <!-- Konten akan diisi oleh JavaScript -->
+        </section>
+        
+        <section id="aktivitas" class="activity-section">
+            <h2 class="activity-title">Tantangan: Pasangkan Bagian Rumah dengan Fungsinya!</h2>
+            <p style="text-align: center; margin-bottom: 1.5rem;">Seret fungsi ke bagian rumah yang sesuai!</p>
+            
+            <div class="matching-game">
+                <div class="matching-items">
+                    <h3 style="text-align: center; margin-bottom: 15px; color: var(--accent);">Fungsi</h3>
+                    <div class="matching-item" draggable="true" data-target="angkul-angkul">
+                        <div class="item-icon">🚪</div>
+                        <div>Pintu masuk utama dengan arsitektur megah</div>
+                    </div>
+                    <div class="matching-item" draggable="true" data-target="aling-aling">
+                        <div class="item-icon">🛡️</div>
+                        <div>Pelindung dari roh jahat dan pandangan langsung</div>
+                    </div>
+                    <div class="matching-item" draggable="true" data-target="bale-dangin">
+                        <div class="item-icon">🏠</div>
+                        <div>Tempat upacara dan kegiatan spiritual</div>
+                    </div>
+                    <div class="matching-item" draggable="true" data-target="bale-dauh">
+                        <div class="item-icon">🛏️</div>
+                        <div>Tempat tidur dan menerima tamu</div>
+                    </div>
+                    <div class="matching-item" draggable="true" data-target="bale-sakepat">
+                        <div class="item-icon">👨‍👩‍👧‍👦</div>
+                        <div>Ruang keluarga dan berkumpul</div>
+                    </div>
+                    <div class="matching-item" draggable="true" data-target="sanggah">
+                        <div class="item-icon">🛕</div>
+                        <div>Tempat suci untuk beribadah</div>
+                    </div>
+                </div>
+                
+                <div class="matching-targets">
+                    <h3 style="text-align: center; margin-bottom: 15px; color: var(--primary);">Bagian Rumah</h3>
+                    <div class="matching-target" data-part="angkul-angkul">
+                        <div class="target-icon">🚪</div>
+                        <div>Angkul-angkul</div>
+                    </div>
+                    <div class="matching-target" data-part="aling-aling">
+                        <div class="target-icon">🛡️</div>
+                        <div>Aling-aling</div>
+                    </div>
+                    <div class="matching-target" data-part="bale-dangin">
+                        <div class="target-icon">🏠</div>
+                        <div>Bale Dangin</div>
+                    </div>
+                    <div class="matching-target" data-part="bale-dauh">
+                        <div class="target-icon">🛏️</div>
+                        <div>Bale Dauh</div>
+                    </div>
+                    <div class="matching-target" data-part="bale-sakepat">
+                        <div class="target-icon">👨‍👩‍👧‍👦</div>
+                        <div>Bale Sakepat</div>
+                    </div>
+                    <div class="matching-target" data-part="sanggah">
+                        <div class="target-icon">🛕</div>
+                        <div>Sanggah</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="activity-buttons">
+                <button class="activity-button" onclick="checkMatchingAnswers()">Periksa Jawaban</button>
+                <button class="activity-button" onclick="resetMatchingGame()">Ulangi</button>
+            </div>
+            
+            <div class="result-message" id="matching-result"></div>
+        </section>
+        
+        <section id="filosofi" class="intro-section">
+            <h2>Filosofi Rumah Adat Bali</h2>
+            <p>Rumah adat Bali dibangun berdasarkan konsep Tri Hita Karana yang menekankan tiga hubungan harmonis:</p>
+            
+            <div class="values-list" style="justify-content: center; margin-top: 1.5rem;">
+                <div class="value-item">
+                    <div class="value-icon">🙏</div>
+                    <div>Parahyangan - Hubungan dengan Tuhan</div>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">👨‍👩‍👧‍👦</div>
+                    <div>Pawongan - Hubungan dengan Sesama</div>
+                </div>
+                <div class="value-item">
+                    <div class="value-icon">🌍</div>
+                    <div>Palemahan - Hubungan dengan Alam</div>
+                </div>
+            </div>
+            
+            <p style="margin-top: 1.5rem;">Selain itu, rumah Bali juga mengikuti konsep Tri Mandala - pembagian zona suci, madya, dan nista dalam tata letak bangunan.</p>
+        </section>
+        
+        <section class="progress-section">
+            <h2>Progress Belajar Kamu</h2>
+            <p>Terus jelajahi untuk menyelesaikan semua aktivitas!</p>
+            
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+                <div class="progress-text" id="progress-text">0%</div>
+            </div>
+            
+            <p id="progress-message">Ayo mulai petualanganmu mengenal Rumah Adat Bali!</p>
+        </section>
+    </div>
+    
+    <div class="bali-border"></div>
+    <footer>
+        <p>&copy; 2023 Rumah Adat Bali - Petualangan di Kampung Nusantara</p>
+        <p>Media Pembelajaran Digital IPS untuk Kelas Rendah SD</p>
+    </footer>
+
+    <script>
+        // Data bagian rumah
+        const baliHouseParts = {
+            'angkul-angkul': {
+                icon: '🚪',
+                title: 'Angkul-angkul',
+                description: 'Angkul-angkul adalah gapura atau pintu masuk utama menuju kompleks rumah tradisional Bali. Gapura ini memiliki atap yang megah dan biasanya dihiasi dengan ukiran khas Bali.',
+                function: 'Pintu masuk utama dengan arsitektur megah yang menjadi ciri khas rumah Bali',
+                philosophy: 'Angkul-angkul melambangkan penyambutan yang hangat sekaligus perlindungan dari energi negatif. Gapura ini menjadi batas antara dunia luar dan dalam.'
+            },
+            'aling-aling': {
+                icon: '🛡️',
+                title: 'Aling-aling',
+                description: 'Aling-aling adalah dinding pembatas yang terletak tepat setelah angkul-angkul. Dinding ini berfungsi untuk menghalangi pandangan langsung ke dalam pekarangan.',
+                function: 'Pelindung dari roh jahat dan penghalang pandangan langsung ke dalam rumah',
+                philosophy: 'Aling-aling berdasarkan kepercayaan Bali bahwa garis lurus memudahkan roh jahat masuk, sehingga perlu dibelokkan. Juga menjaga privasi penghuni rumah.'
+            },
+            'bale-dangin': {
+                icon: '🏠',
+                title: 'Bale Dangin',
+                description: 'Bale Dangin adalah balai yang terletak di sebelah timur kompleks rumah. Bangunan ini digunakan untuk kegiatan upacara dan ritual keagamaan.',
+                function: 'Tempat upacara, pertemuan adat, dan kegiatan spiritual keluarga',
+                philosophy: 'Bale Dangin berada di zona Timur yang dianggap suci (utama). Menunjukkan pentingnya spiritualitas dalam kehidupan sehari-hari masyarakat Bali.'
+            },
+            'bale-dauh': {
+                icon: '🛏️',
+                title: 'Bale Dauh',
+                description: 'Bale Dauh adalah balai yang terletak di sebelah barat kompleks rumah. Bangunan ini berfungsi sebagai tempat tidur dan menerima tamu.',
+                function: 'Tempat tidur, menerima tamu, dan ruang serbaguna untuk aktivitas keluarga',
+                philosophy: 'Bale Dauh berada di zona Barat (madya) yang merupakan area semi-suci. Mencerminkan keseimbangan antara kehidupan spiritual dan duniawi.'
+            },
+            'bale-sakepat': {
+                icon: '👨‍👩‍👧‍👦',
+                title: 'Bale Sakepat',
+                description: 'Bale Sakepat adalah balai dengan empat tiang penyangga. Bangunan ini digunakan sebagai ruang keluarga dan tempat berkumpul.',
+                function: 'Ruang keluarga, tempat berkumpul, dan bersantai bersama keluarga',
+                philosophy: 'Bale Sakepat dengan empat tiang melambangkan stabilitas dan kekuatan keluarga. Juga menunjukkan pentingnya kebersamaan dalam kehidupan.'
+            },
+            'sanggah': {
+                icon: '🛕',
+                title: 'Sanggah',
+                description: 'Sanggah adalah tempat suci yang berada di kompleks rumah Bali. Tempat ini digunakan untuk persembahyangan dan ritual keagamaan keluarga.',
+                function: 'Tempat suci untuk beribadah, persembahyangan, dan upacara keluarga',
+                philosophy: 'Sanggah merupakan representasi hubungan antara manusia dengan Tuhan (Parahyangan). Menempati posisi paling suci dan strategis di kompleks rumah.'
+            }
+        };
+
+        // Progress belajar
+        let progress = 0;
+        const progressBar = document.getElementById('progress');
+        const progressText = document.getElementById('progress-text');
+        const progressMessage = document.getElementById('progress-message');
+        
+        function updateProgress(value) {
+            progress += value;
+            if (progress > 100) progress = 100;
+            progressBar.style.width = progress + '%';
+            progressText.textContent = progress + '%';
+            
+            if (progress >= 100) {
+                progressMessage.textContent = 'Selamat! Kamu telah menyelesaikan semua aktivitas tentang Rumah Adat Bali!';
+            } else if (progress >= 70) {
+                progressMessage.textContent = 'Hebat! Kamu hampir menyelesaikan semua aktivitas!';
+            } else if (progress >= 40) {
+                progressMessage.textContent = 'Bagus! Terus pelajari bagian-bagian rumah lainnya!';
+            } else if (progress >= 10) {
+                progressMessage.textContent = 'Kamu sudah mulai belajar! Lanjutkan!';
+            }
+        }
+        
+        // Fungsi untuk menampilkan detail bagian rumah
+        function showPartDetail(partKey) {
+            const part = baliHouseParts[partKey];
+            const detailSection = document.getElementById('part-detail');
+            
+            detailSection.innerHTML = `
+                <div class="part-header">
+                    <div class="part-detail-icon">${part.icon}</div>
+                    <div class="part-info">
+                        <h2>${part.title}</h2>
+                        <p>${part.description}</p>
+                    </div>
+                </div>
+                
+                <div class="values-section">
+                    <h3>Fungsi:</h3>
+                    <p>${part.function}</p>
+                </div>
+                
+                <div class="values-section">
+                    <h3>Filosofi:</h3>
+                    <p>${part.philosophy}</p>
+                </div>
+            `;
+            
+            detailSection.style.display = 'block';
+            updateProgress(5);
+            
+            // Scroll ke bagian detail
+            detailSection.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Drag and Drop functionality untuk matching game
+        let draggedItem = null;
+        
+        document.querySelectorAll('.matching-item').forEach(item => {
+            item.addEventListener('dragstart', function() {
+                draggedItem = this;
+                setTimeout(() => this.style.opacity = '0.4', 0);
+            });
+            
+            item.addEventListener('dragend', function() {
+                setTimeout(() => this.style.opacity = '1', 0);
+                draggedItem = null;
+            });
+        });
+        
+        document.querySelectorAll('.matching-target').forEach(target => {
+            target.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('hover');
+            });
+            
+            target.addEventListener('dragleave', function() {
+                this.classList.remove('hover');
+            });
+            
+            target.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('hover');
+                
+                if (draggedItem.getAttribute('data-target') === this.getAttribute('data-part')) {
+                    this.innerHTML = draggedItem.innerHTML;
+                    this.style.background = '#E8F5E9';
+                    this.style.border = '2px solid #4CAF50';
+                    draggedItem.style.display = 'none';
+                } else {
+                    this.style.background = '#FFEBEE';
+                    this.style.border = '2px solid #F44336';
+                    setTimeout(() => {
+                        this.style.background = 'white';
+                        this.style.border = '2px dashed #ccc';
+                        this.innerHTML = `
+                            <div class="target-icon">${this.querySelector('.target-icon').textContent}</div>
+                            <div>${this.getAttribute('data-part').split('-').map(word => 
+                                word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</div>
+                        `;
+                    }, 1000);
+                }
+            });
+        });
+        
+        // Fungsi untuk memeriksa jawaban matching game
+        function checkMatchingAnswers() {
+            const resultElement = document.getElementById('matching-result');
+            let correctCount = 0;
+            let totalCount = 0;
+            
+            document.querySelectorAll('.matching-target').forEach(target => {
+                const part = target.getAttribute('data-part');
+                const content = target.textContent.trim();
+                
+                let expectedFunction = '';
+                switch(part) {
+                    case 'angkul-angkul': expectedFunction = 'Pintu masuk utama dengan arsitektur megah'; break;
+                    case 'aling-aling': expectedFunction = 'Pelindung dari roh jahat dan pandangan langsung'; break;
+                    case 'bale-dangin': expectedFunction = 'Tempat upacara dan kegiatan spiritual'; break;
+                    case 'bale-dauh': expectedFunction = 'Tempat tidur dan menerima tamu'; break;
+                    case 'bale-sakepat': expectedFunction = 'Ruang keluarga dan berkumpul'; break;
+                    case 'sanggah': expectedFunction = 'Tempat suci untuk beribadah'; break;
+                }
+                
+                if (content.includes(expectedFunction)) {
+                    correctCount++;
+                }
+                totalCount++;
+            });
+            
+            if (correctCount === totalCount) {
+                resultElement.textContent = 'Selamat! Semua jawaban kamu benar! Kamu sudah memahami fungsi bagian-bagian Rumah Adat Bali dengan baik.';
+                resultElement.className = 'result-message success';
+                updateProgress(25);
+            } else {
+                resultElement.textContent = `Kamu berhasil memasangkan ${correctCount} dari ${totalCount} dengan benar. Coba lagi!`;
+                resultElement.className = 'result-message error';
+            }
+        }
+        
+        // Fungsi untuk mereset matching game
+        function resetMatchingGame() {
+            document.querySelectorAll('.matching-target').forEach(target => {
+                const part = target.getAttribute('data-part');
+                target.innerHTML = `
+                    <div class="target-icon">${baliHouseParts[part].icon}</div>
+                    <div>${baliHouseParts[part].title}</div>
+                `;
+                target.style.background = 'white';
+                target.style.border = '2px dashed #ccc';
+            });
+            
+            document.querySelectorAll('.matching-item').forEach(item => {
+                item.style.display = 'flex';
+                item.style.opacity = '1';
+            });
+            
+            document.getElementById('matching-result').className = 'result-message';
+        }
+        
+        // Inisialisasi progress
+        updateProgress(0);
+    </script>
+</body>
+</html>
